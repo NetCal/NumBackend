@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <name>NumBackend by DiscoDNC</name>
-    <description>A backend for the number representation that allows you to switch between reals and rationals.</description>
+    <description>A backend for (immutable) number representations that allows you to switch between different real and rational implementations.</description>
     <url>discodnc.cs.uni-kl.de</url>
 
     <groupId>de.uni_kl.cs.discodnc</groupId>
     <artifactId>NumBackend</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 	
     <licenses>
         <license>
