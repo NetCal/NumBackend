@@ -240,12 +240,12 @@ public class RealSinglePrecision implements Num {
 
     // Compare to other number: >, >=, =, <=, <
     public boolean gt(Num num) {
-        float num_float = Double.valueOf(num.doubleValue()).floatValue();
+        float num_float = new Float(num.doubleValue());
         return value > num_float;
     }
     
     public boolean geq(Num num) {
-        float num_float = Double.valueOf(num.doubleValue()).floatValue();
+        float num_float = new Float(num.doubleValue());
         return value >= num_float;
     }
     
