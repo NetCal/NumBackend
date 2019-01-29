@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>NumBackend by DiscoDNC</name>
+    <name>NetworkCalculus.org DNC NumBackend</name>
     <description>A backend for (immutable) number representations that allows you to switch between different real and rational implementations.</description>
-    <url>discodnc.cs.uni-kl.de</url>
+    <url>networkcalculus.org</url>
 
-    <groupId>de.uni_kl.cs.discodnc</groupId>
-    <artifactId>NumBackend</artifactId>
-    <version>1.0</version>
+    <groupId>org.networkcalculus.numbers</groupId>
+    <artifactId>NetCal-NumBackend</artifactId>
+    <version>1.0.0</version>
 	
     <licenses>
         <license>
@@ -20,12 +20,12 @@
     </licenses>
 
     <developers>
-        <developer>
-            <name>Steffen Bondorf</name>
-            <email>bondorf@cs.uni-kl.de</email>
-            <organization>Distributed Computer Systems (DISCO) Lab at TU Kaiserslautern</organization>
-            <organizationUrl>https://disco.cs.uni-kl.de</organizationUrl>
-        </developer>
+		<developer>
+			<name>Steffen Bondorf</name>
+			<email>steffen.bondorf@ntnu.no</email>
+			<organization>NTNU - Norwegian University of Science and Technology, Tondheim, Norway</organization>
+			<organizationUrl>https://www.ntnu.edu/iik</organizationUrl>
+		</developer>
     </developers>
 
     <scm>

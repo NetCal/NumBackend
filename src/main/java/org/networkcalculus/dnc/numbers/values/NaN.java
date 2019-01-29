@@ -1,16 +1,14 @@
 /*
- * This file is part of the Disco Deterministic Network Calculator.
+ * This file is part of the Deterministic Network Calculator (DNC) Number Backend.
  *
  * Copyright (C) 2014 - 2018 Steffen Bondorf
- * Copyright (C) 2017+ The DiscoDNC contributors
+ * Copyright (C) 2017 - 2018 The DiscoDNC contributors
+ * Copyright (C) 2019+ The DNC contributors
  *
- * Distributed Computer Systems (DISCO) Lab
- * University of Kaiserslautern, Germany
- *
- * http://discodnc.cs.uni-kl.de
+ * http://networkcalculus.org
  *
  *
- * The Disco Deterministic Network Calculator (DiscoDNC) is free software;
+ * The Deterministic Network Calculator (DNC) is free software;
  * you can redistribute it and/or modify it under the terms of the 
  * GNU Lesser General Public License as published by the Free Software Foundation; 
  * either version 2.1 of the License, or (at your option) any later version.
@@ -26,54 +24,62 @@
  *
  */
 
-package de.uni_kl.cs.discodnc.numbers.values;
+package org.networkcalculus.dnc.numbers.values;
 
-import de.uni_kl.cs.discodnc.numbers.Num;
+import org.networkcalculus.dnc.numbers.Num;
 
-public final class NegativeInfinity implements Num {
-    private static NegativeInfinity instance = new NegativeInfinity();
-
+public final class NaN implements Num {
+    private static NaN instance = new NaN();
+    
     // --------------------------------------------------------------------------------------------------------------
     // Constructors
     // --------------------------------------------------------------------------------------------------------------
-
-    private NegativeInfinity() {
-    }
     
- 	public NegativeInfinity(int num) {
-    }
- 	
-    public NegativeInfinity(double value) {
-    }
-    
-    public NegativeInfinity(int num, int den) {
-    }
-    
-    public NegativeInfinity(NegativeInfinity num) {
+	private NaN() {
     }
 
-    public static NegativeInfinity getInstance() {
+    public NaN(int num) {
+    }
+    
+    public NaN(double value) {
+    }
+    
+    public NaN(int num, int den){
+    }
+    
+    public NaN(NaN num) {
+    }
+
+    /* 
+     * NaN should not be used as a factory.
+     * Therefore, there is no instance or get Instance method.
+     */
+    public static NaN getInstance() {
     	return instance;
     }
-
+	
     // --------------------------------------------------------------------------------------------------------------
     // Conversions
     // --------------------------------------------------------------------------------------------------------------
-
+    
     public double doubleValue() {
-        return Double.NEGATIVE_INFINITY;
+        return Double.NaN;
     }
+
+    /* 
+     * NaN does not have an value member variable.
+     */
 
     @Override
     public int hashCode() {
-        return Double.hashCode(Double.NEGATIVE_INFINITY);
+        return Double.hashCode(Double.NaN);
     }
 
     @Override
     public String toString() {
-        return Double.toString(Double.NEGATIVE_INFINITY);
+        return Double.toString(Double.NaN);
     }
-
+	
     // --------------------------------------------------------------------------------------------------------------
     // Factory
     // --------------------------------------------------------------------------------------------------------------
@@ -91,19 +97,19 @@ public final class NegativeInfinity implements Num {
     }
 
     public Num getNegativeInfinity() {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num createNegativeInfinity() {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num getNaN() {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num createNaN() {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num getZero() {
@@ -114,15 +120,11 @@ public final class NegativeInfinity implements Num {
         throw new RuntimeException();
     }
 
-    public Num create(double value) {
-        if (value == Double.NEGATIVE_INFINITY) {
-            return instance;
-        } else {
-            throw new RuntimeException();
-        }
+    public Num create(int num) {
+        throw new RuntimeException();
     }
 
-    public Num create(int num) {
+    public Num create(double value) {
         throw new RuntimeException();
     }
 
@@ -131,11 +133,7 @@ public final class NegativeInfinity implements Num {
     }
 
     public Num create(String num_str) throws Exception {
-        if (num_str.equals("-Infinity")) {
-            return instance;
-        } else {
-            throw new RuntimeException();
-        }
+        throw new RuntimeException();
     }
     
     // --------------------------------------------------------------------------------------------------------------
@@ -143,7 +141,15 @@ public final class NegativeInfinity implements Num {
     // --------------------------------------------------------------------------------------------------------------
 
     // Compare to zero: >, >=, =, <=, <
-    public boolean gtZero() {
+    public boolean ltZero() {
+        return false;
+    }
+
+    public boolean leqZero() {
+        return false;
+    }
+    
+    public boolean eqZero() {
         return false;
     }
 
@@ -151,63 +157,39 @@ public final class NegativeInfinity implements Num {
         return false;
     }
 
-    public boolean eqZero() {
+    public boolean gtZero() {
         return false;
     }
 
-    public boolean leqZero() {
-        return true;
-    }
-
-    public boolean ltZero() {
-        return true;
-    }
-
     // Compare to other number: >, >=, =, <=, <
-    public boolean gt(Num num) {
+    public boolean lt(Num num) {
+        return false;
+    }
+
+    public boolean leq(Num num) {
+        return false;
+    }
+    
+    public boolean eq(Num num) {
+        return false;
+    }
+    
+    public boolean eq(double num) {
+        return false;
+    }
+    
+//	@SuppressFBWarnings(value = "EQ_ALWAYS_FALSE", justification = "Comparison to NaN should always return false.")
+    @Override
+    public boolean equals(Object obj) {
         return false;
     }
 
     public boolean geq(Num num) {
         return false;
     }
-
-    public boolean eq(Num num) {
-        if (num.ltZero() && num.isInfinite()) {
-            return true;
-        } else {
-        	return false;
-        }
-    }
-
-    public boolean eq(double num) {
-        if (num == Double.NEGATIVE_INFINITY) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj instanceof NegativeInfinity) {
-            return true;
-        }
-        if (obj instanceof Num) {
-            return eq(((Num) obj));
-        }
+    
+    public boolean gt(Num num) {
         return false;
-    }
-
-    public boolean leq(Num num) {
-        return true;
-    }
-
-    public boolean lt(Num num) {
-        return true;
     }
 
     // Properties
@@ -216,11 +198,11 @@ public final class NegativeInfinity implements Num {
     }
 
     public boolean isInfinite() {
-        return true;
+        return false;
     }
 
     public boolean isNaN() {
-        return false;
+        return true;
     }
 
     // --------------------------------------------------------------------------------------------------------------
@@ -228,38 +210,38 @@ public final class NegativeInfinity implements Num {
     // --------------------------------------------------------------------------------------------------------------
 
     public Num add(Num num1, Num num2) {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num sub(Num num1, Num num2) {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num mult(Num num1, Num num2) {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num div(Num num1, Num num2) {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num abs(Num num) {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num diff(Num num1, Num num2) {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num max(Num num1, Num num2) {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num min(Num num1, Num num2) {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num negate(Num num) {
-        throw new RuntimeException();
+        return instance;
     }
 }

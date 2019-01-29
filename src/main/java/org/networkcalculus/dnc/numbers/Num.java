@@ -1,16 +1,14 @@
 /*
- * This file is part of the Disco Deterministic Network Calculator.
+ * This file is part of the Deterministic Network Calculator (DNC) Number Backend.
  *
  * Copyright (C) 2014 - 2018 Steffen Bondorf
- * Copyright (C) 2017+ The DiscoDNC contributors
+ * Copyright (C) 2017 - 2018 The DiscoDNC contributors
+ * Copyright (C) 2019+ The DNC contributors
  *
- * Distributed Computer Systems (DISCO) Lab
- * University of Kaiserslautern, Germany
- *
- * http://discodnc.cs.uni-kl.de
+ * http://networkcalculus.org
  *
  *
- * The Disco Deterministic Network Calculator (DiscoDNC) is free software;
+ * The Deterministic Network Calculator (DNC) is free software;
  * you can redistribute it and/or modify it under the terms of the 
  * GNU Lesser General Public License as published by the Free Software Foundation; 
  * either version 2.1 of the License, or (at your option) any later version.
@@ -26,15 +24,15 @@
  *
  */
 
-package de.uni_kl.cs.discodnc.numbers;
+package org.networkcalculus.dnc.numbers;
 
-import de.uni_kl.cs.discodnc.numbers.implementations.RationalBigInt;
-import de.uni_kl.cs.discodnc.numbers.implementations.RationalInt;
-import de.uni_kl.cs.discodnc.numbers.implementations.RealDoublePrecision;
-import de.uni_kl.cs.discodnc.numbers.implementations.RealSinglePrecision;
-import de.uni_kl.cs.discodnc.numbers.values.NaN;
-import de.uni_kl.cs.discodnc.numbers.values.NegativeInfinity;
-import de.uni_kl.cs.discodnc.numbers.values.PositiveInfinity;
+import org.networkcalculus.dnc.numbers.implementations.RationalBigInt;
+import org.networkcalculus.dnc.numbers.implementations.RationalInt;
+import org.networkcalculus.dnc.numbers.implementations.RealDoublePrecision;
+import org.networkcalculus.dnc.numbers.implementations.RealSinglePrecision;
+import org.networkcalculus.dnc.numbers.values.NaN;
+import org.networkcalculus.dnc.numbers.values.NegativeInfinity;
+import org.networkcalculus.dnc.numbers.values.PositiveInfinity;
 
 public interface Num {
     final Num NaN = new NaN(Double.NaN);

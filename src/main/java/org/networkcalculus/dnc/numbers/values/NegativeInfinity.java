@@ -1,16 +1,14 @@
 /*
- * This file is part of the Disco Deterministic Network Calculator.
+ * This file is part of the Deterministic Network Calculator (DNC) Number Backend.
  *
  * Copyright (C) 2014 - 2018 Steffen Bondorf
- * Copyright (C) 2017+ The DiscoDNC contributors
+ * Copyright (C) 2017 - 2018 The DiscoDNC contributors
+ * Copyright (C) 2019+ The DNC contributors
  *
- * Distributed Computer Systems (DISCO) Lab
- * University of Kaiserslautern, Germany
- *
- * http://discodnc.cs.uni-kl.de
+ * http://networkcalculus.org
  *
  *
- * The Disco Deterministic Network Calculator (DiscoDNC) is free software;
+ * The Deterministic Network Calculator (DNC) is free software;
  * you can redistribute it and/or modify it under the terms of the 
  * GNU Lesser General Public License as published by the Free Software Foundation; 
  * either version 2.1 of the License, or (at your option) any later version.
@@ -26,33 +24,33 @@
  *
  */
 
-package de.uni_kl.cs.discodnc.numbers.values;
+package org.networkcalculus.dnc.numbers.values;
 
-import de.uni_kl.cs.discodnc.numbers.Num;
+import org.networkcalculus.dnc.numbers.Num;
 
-public final class PositiveInfinity implements Num {
-    private static PositiveInfinity instance = new PositiveInfinity();
+public final class NegativeInfinity implements Num {
+    private static NegativeInfinity instance = new NegativeInfinity();
 
     // --------------------------------------------------------------------------------------------------------------
     // Constructors
     // --------------------------------------------------------------------------------------------------------------
 
-    private PositiveInfinity() {
+    private NegativeInfinity() {
     }
     
- 	public PositiveInfinity(int num) {
+ 	public NegativeInfinity(int num) {
     }
  	
-    public PositiveInfinity(double value) {
+    public NegativeInfinity(double value) {
     }
     
-    public PositiveInfinity(int num, int den) {
+    public NegativeInfinity(int num, int den) {
     }
     
-    public PositiveInfinity(PositiveInfinity num) {
+    public NegativeInfinity(NegativeInfinity num) {
     }
 
-    public static PositiveInfinity getInstance() {
+    public static NegativeInfinity getInstance() {
     	return instance;
     }
 
@@ -61,17 +59,17 @@ public final class PositiveInfinity implements Num {
     // --------------------------------------------------------------------------------------------------------------
 
     public double doubleValue() {
-        return Double.POSITIVE_INFINITY;
+        return Double.NEGATIVE_INFINITY;
     }
 
     @Override
     public int hashCode() {
-        return Double.hashCode(Double.POSITIVE_INFINITY);
+        return Double.hashCode(Double.NEGATIVE_INFINITY);
     }
 
     @Override
     public String toString() {
-        return Double.toString(Double.POSITIVE_INFINITY);
+        return Double.toString(Double.NEGATIVE_INFINITY);
     }
 
     // --------------------------------------------------------------------------------------------------------------
@@ -83,19 +81,19 @@ public final class PositiveInfinity implements Num {
     }
 
     public Num getPositiveInfinity() {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num createPositiveInfinity() {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num getNegativeInfinity() {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num createNegativeInfinity() {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num getNaN() {
@@ -114,16 +112,16 @@ public final class PositiveInfinity implements Num {
         throw new RuntimeException();
     }
 
-    public Num create(int num) {
-        throw new RuntimeException();
-    }
-
     public Num create(double value) {
-        if (value == Double.POSITIVE_INFINITY) {
+        if (value == Double.NEGATIVE_INFINITY) {
             return instance;
         } else {
             throw new RuntimeException();
         }
+    }
+
+    public Num create(int num) {
+        throw new RuntimeException();
     }
 
     public Num create(int num, int den) {
@@ -131,7 +129,7 @@ public final class PositiveInfinity implements Num {
     }
 
     public Num create(String num_str) throws Exception {
-        if (num_str.equals("Infinity")) {
+        if (num_str.equals("-Infinity")) {
             return instance;
         } else {
             throw new RuntimeException();
@@ -144,11 +142,11 @@ public final class PositiveInfinity implements Num {
 
     // Compare to zero: >, >=, =, <=, <
     public boolean gtZero() {
-        return true;
+        return false;
     }
 
     public boolean geqZero() {
-        return true;
+        return false;
     }
 
     public boolean eqZero() {
@@ -156,24 +154,24 @@ public final class PositiveInfinity implements Num {
     }
 
     public boolean leqZero() {
-        return false;
+        return true;
     }
 
     public boolean ltZero() {
-        return false;
+        return true;
     }
 
     // Compare to other number: >, >=, =, <=, <
     public boolean gt(Num num) {
-        return true;
+        return false;
     }
 
     public boolean geq(Num num) {
-        return true;
+        return false;
     }
 
     public boolean eq(Num num) {
-        if (num.gtZero() && num.isInfinite()) {
+        if (num.ltZero() && num.isInfinite()) {
             return true;
         } else {
         	return false;
@@ -181,7 +179,7 @@ public final class PositiveInfinity implements Num {
     }
 
     public boolean eq(double num) {
-        if (num == Double.POSITIVE_INFINITY) {
+        if (num == Double.NEGATIVE_INFINITY) {
             return true;
         } else {
             return false;
@@ -193,7 +191,7 @@ public final class PositiveInfinity implements Num {
         if (obj == null) {
             return false;
         }
-        if (obj instanceof PositiveInfinity) {
+        if (obj instanceof NegativeInfinity) {
             return true;
         }
         if (obj instanceof Num) {
@@ -203,11 +201,11 @@ public final class PositiveInfinity implements Num {
     }
 
     public boolean leq(Num num) {
-        return false;
+        return true;
     }
 
     public boolean lt(Num num) {
-        return false;
+        return true;
     }
 
     // Properties
@@ -222,7 +220,7 @@ public final class PositiveInfinity implements Num {
     public boolean isNaN() {
         return false;
     }
-    
+
     // --------------------------------------------------------------------------------------------------------------
     // Operations (Utils)
     // --------------------------------------------------------------------------------------------------------------

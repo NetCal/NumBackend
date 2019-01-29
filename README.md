@@ -1,6 +1,8 @@
-# NumBackend by DiscoDNC
+# NetworkCalculus.org DNC NumBackend
 
-A backend for (immutable) number representations that allows you to switch between different real and rational implementations.
+A backend for (immutable) number representations that allows to switch between different real and rational implementations.
+
+This code is developed by the NetworkCalculus.org contributors for use in the Deterministic Network Calculator (DNC). See networkcalculus.org.
 
 ### Limitations
 

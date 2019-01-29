@@ -1,16 +1,14 @@
 /*
- * This file is part of the Disco Deterministic Network Calculator.
+ * This file is part of the Deterministic Network Calculator (DNC) Number Backend.
  *
- * Copyright (C) 2013 - 2018 Steffen Bondorf
- * Copyright (C) 2017+ The DiscoDNC contributors
+ * Copyright (C) 2016 - 2018 Steffen Bondorf
+ * Copyright (C) 2017 - 2018 The DiscoDNC contributors
+ * Copyright (C) 2019+ The DNC contributors
  *
- * Distributed Computer Systems (DISCO) Lab
- * University of Kaiserslautern, Germany
- *
- * http://discodnc.cs.uni-kl.de
+ * http://networkcalculus.org
  *
  *
- * The Disco Deterministic Network Calculator (DiscoDNC) is free software;
+ * The Deterministic Network Calculator (DNC) is free software;
  * you can redistribute it and/or modify it under the terms of the 
  * GNU Lesser General Public License as published by the Free Software Foundation; 
  * either version 2.1 of the License, or (at your option) any later version.
@@ -26,28 +24,29 @@
  *
  */
 
-package de.uni_kl.cs.discodnc.numbers.implementations;
+package org.networkcalculus.dnc.numbers.implementations;
 
-import de.uni_kl.cs.discodnc.numbers.Num;
-import de.uni_kl.cs.discodnc.numbers.values.NaN;
-import de.uni_kl.cs.discodnc.numbers.values.NegativeInfinity;
-import de.uni_kl.cs.discodnc.numbers.values.PositiveInfinity;
+import org.apache.commons.math3.fraction.BigFraction;
+import org.networkcalculus.dnc.numbers.Num;
+import org.networkcalculus.dnc.numbers.values.NaN;
+import org.networkcalculus.dnc.numbers.values.NegativeInfinity;
+import org.networkcalculus.dnc.numbers.values.PositiveInfinity;
 
-import org.apache.commons.math3.fraction.Fraction;
+import java.math.BigInteger;
 
 /**
- * Wrapper class around org.apache.commons.math3.fraction.Fraction introducing
- * special values like positive / negative infinity and NaN as well as operators
- * like min, max, ==, &gt;, &gt;=, &lt;, and &lt;= that are not part of Fraction
- * but needed by the network calculator.
+ * Wrapper class around org.apache.commons.math3.BigFraction.BigFraction
+ * introducing special values like positive / negative infinity and NaN as well
+ * as operators like min, max, ==, &gt;, &gt;=, &lt;, and &lt;= that are not
+ * part of BigFraction but needed by the network calculator.
  * <p>
- * For the ease of converting from the primitive data type double to Fraction
+ * For the ease of converting from the primitive data type double to BigFraction
  * objects, copy by value semantic are is applied.
  */
-public class RationalInt implements Num {
-    private static RationalInt instance = new RationalInt();
+public class RationalBigInt implements Num {
+    private static RationalBigInt instance = new RationalBigInt();
 
-    private Fraction value;
+    private BigFraction value;
     
     private Num POSITIVE_INFINITY = null;
     private Num NEGATIVE_INFINITY = null;
@@ -58,43 +57,47 @@ public class RationalInt implements Num {
     // Constructors
     // --------------------------------------------------------------------------------------------------------------
     
-    private RationalInt() {
+    private RationalBigInt() {
+    }
+
+    public RationalBigInt(int num) {
+        value = new BigFraction(num);
     }
     
-    public RationalInt(int num) {
-        value = new Fraction(num);
+    public RationalBigInt(double value) {
+        this.value = new BigFraction(value);
     }
 
-    public RationalInt(double value) {
-        this.value = new Fraction(value);
+    public RationalBigInt(int num, int den) {
+        value = new BigFraction(num, den);
     }
 
-    public RationalInt(int num, int den) {
-        value = new Fraction(num, den);
+    public RationalBigInt(RationalBigInt num) {
+        value = new BigFraction(num.value.getNumerator(), num.value.getDenominator());
     }
 
-    public RationalInt(RationalInt num) {
-        value = new Fraction(num.value.getNumerator(), num.value.getDenominator());
+    private RationalBigInt(BigInteger num, BigInteger den) {
+        value = new BigFraction(num, den);
     }
 
-    private RationalInt(Fraction frac) {
-        value = new Fraction(frac.getNumerator(), frac.getDenominator());
+    private RationalBigInt(BigFraction frac) {
+        value = new BigFraction(frac.getNumerator(), frac.getDenominator());
     }
 
-    public static RationalInt getInstance() {
+    public static RationalBigInt getInstance() {
         return instance;
     }
     
     // --------------------------------------------------------------------------------------------------------------
     // Conversions
     // --------------------------------------------------------------------------------------------------------------
-
+    
     public double doubleValue() {
         return value.doubleValue();
     }
 
-    public Fraction getValue() {
-    	return new Fraction(this.value.getNumerator(), this.value.getDenominator());
+    public BigFraction getValue() {
+    	return new BigFraction(this.value.getNumerator(), this.value.getDenominator());
     }
 
     @Override
@@ -106,15 +109,15 @@ public class RationalInt implements Num {
     public String toString() {
         return value.toString();
     }
-    
+
     // --------------------------------------------------------------------------------------------------------------
     // Factory
     // --------------------------------------------------------------------------------------------------------------
-
+    
     public Num copy() {
-        return new RationalInt(this.value.getNumerator(), this.value.getDenominator());
+        return new RationalBigInt(this.value.getNumerator(), this.value.getDenominator());
     }
-
+    
     public Num getPositiveInfinity() {
         if (POSITIVE_INFINITY == null) {
             POSITIVE_INFINITY = createPositiveInfinity();
@@ -145,7 +148,7 @@ public class RationalInt implements Num {
     }
 
     public Num createNaN() {
-        return de.uni_kl.cs.discodnc.numbers.values.NaN.getInstance();
+        return org.networkcalculus.dnc.numbers.values.NaN.getInstance();
     }
 
     public Num getZero() {
@@ -156,11 +159,11 @@ public class RationalInt implements Num {
     }
 
     public Num createZero() {
-        return new RationalInt(0);
+        return new RationalBigInt(0);
     }
-
+    
     public Num create(int num) {
-        return new RationalInt(num);
+        return new RationalBigInt(num);
     }
 
     public Num create(double value) {
@@ -175,7 +178,7 @@ public class RationalInt implements Num {
             return createNaN();
         }
 
-        return new RationalInt(value);
+        return new RationalBigInt(value);
     }
 
     public Num create(int num, int den) {
@@ -183,7 +186,7 @@ public class RationalInt implements Num {
             throw new ArithmeticException("/ by zero");
         }
 
-        return new RationalInt(num, den);
+        return new RationalBigInt(num, den);
     }
 
     public Num create(String num_str) throws Exception {
@@ -201,7 +204,7 @@ public class RationalInt implements Num {
         boolean double_based = num_str.contains(".");
 
         if (fraction_indicator && double_based) {
-            throw new Exception("Invalid string representation of a number based on RationalInt: " + num_str);
+            throw new Exception("Invalid string representation of a number based on RationalBigInt: " + num_str);
         }
 
         try {
@@ -213,7 +216,7 @@ public class RationalInt implements Num {
             if (fraction_indicator) {
                 String[] num_den = num_str.split(" / "); // ["num","den"]
                 if (num_den.length != 2) {
-                    throw new Exception("Invalid string representation of a number based on RationalInt: " + num_str);
+                    throw new Exception("Invalid string representation of a number based on RationalBigInt: " + num_str);
                 }
 
                 int den = Integer.parseInt(num_den[1]);
@@ -228,39 +231,39 @@ public class RationalInt implements Num {
                 return create(Double.parseDouble(num_str));
             }
         } catch (Exception e) {
-            throw new Exception("Invalid string representation of a number based on RationalInt: " + num_str);
+            throw new Exception("Invalid string representation of a number based on RationalBigInt: " + num_str);
         }
 
         // This code should not be reachable because all the operations above either
         // succeed such that we can return a number
         // of raise an exception of some kind. Yet, Java does not get this and thus
         // complains if there's no "finalizing statement".
-        throw new Exception("Invalid string representation of a number based on RationalInt: " + num_str);
+        throw new Exception("Invalid string representation of a number based on RationalBigInt: " + num_str);
     }
-    
+
     // --------------------------------------------------------------------------------------------------------------
     // Comparisons
     // --------------------------------------------------------------------------------------------------------------
-
+    
     // Compare to zero: >, >=, =, <=, <
     public boolean gtZero() {
-        return this.value.compareTo(Fraction.ZERO) > 0;
+        return this.value.compareTo(BigFraction.ZERO) > 0;
     }
-    
+
     public boolean geqZero() {
-        return this.value.compareTo(Fraction.ZERO) >= 0;
+        return this.value.compareTo(BigFraction.ZERO) >= 0;
     }
 
     public boolean eqZero() {
-        return value.getNumerator() == 0;
+        return value.compareTo(BigFraction.ZERO) == 0;
     }
 
     public boolean leqZero() {
-        return this.value.compareTo(Fraction.ZERO) <= 0;
+        return this.value.compareTo(BigFraction.ZERO) <= 0;
     }
-
+    
     public boolean ltZero() {
-        return this.value.compareTo(Fraction.ZERO) < 0;
+        return this.value.compareTo(BigFraction.ZERO) < 0;
     }
 
     // Compare to other number: >, >=, =, <=, <
@@ -275,7 +278,7 @@ public class RationalInt implements Num {
             return true;
         }
 
-        return this.value.compareTo(((RationalInt) num).value) > 0;
+        return this.value.compareTo(((RationalBigInt) num).value) > 0;
     }
 
     public boolean geq(Num num) {
@@ -289,27 +292,27 @@ public class RationalInt implements Num {
             return true;
         }
 
-        return this.value.compareTo(((RationalInt) num).value) >= 0;
+        return this.value.compareTo(((RationalBigInt) num).value) >= 0;
+    }
+    
+    public boolean eq(Num num) {
+    	if (!(num instanceof RationalBigInt)) {
+    		return false;
+    	}
+    	
+        return this.value.compareTo(((RationalBigInt)num).value) == 0;
     }
 
-	public boolean eq(Num num) {
-	    if (!(num instanceof RationalInt)) {
-	        return false;
-	    }
-	    
-	    return this.value.compareTo(((RationalInt)num).value) == 0;
-	}
-
     public boolean eq(double num) {
-        return eq(new RationalInt(num));
+    	return eq(new RationalBigInt(num));
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof RationalInt)) {
+        if (obj == null || !(obj instanceof RationalBigInt)) {
             return false;
         } else {
-            return eq(((RationalInt) obj));
+            return eq(((RationalBigInt) obj));
         }
     }
 
@@ -324,7 +327,7 @@ public class RationalInt implements Num {
             return false;
         }
 
-        return this.value.compareTo(((RationalInt) num).value) <= 0;
+        return this.value.compareTo(((RationalBigInt) num).value) <= 0;
     }
 
     public boolean lt(Num num) {
@@ -338,9 +341,9 @@ public class RationalInt implements Num {
             return false;
         }
 
-        return this.value.compareTo(((RationalInt) num).value) < 0;
+        return this.value.compareTo(((RationalBigInt) num).value) < 0;
     }
-    
+
     // Properties
     public boolean isFinite() {
         return true;
@@ -357,24 +360,23 @@ public class RationalInt implements Num {
     // --------------------------------------------------------------------------------------------------------------
     // Operations (Utils)
     // --------------------------------------------------------------------------------------------------------------
-
+    
     public Num add(Num num1, Num num2) {
         if (num1 instanceof NaN || num2 instanceof NaN
                 || (num1 instanceof PositiveInfinity && num2 instanceof NegativeInfinity)
                 || (num1 instanceof NegativeInfinity && num2 instanceof PositiveInfinity)) {
             return getNaN();
         }
-        if (num1 instanceof PositiveInfinity || num2 instanceof PositiveInfinity) { // other num is not negative
-            // infinity
+        if (num1 instanceof PositiveInfinity || num2 instanceof PositiveInfinity) {
+        	// other num is not negative infinity
             return getPositiveInfinity();
         }
-        if (num1 instanceof NegativeInfinity || num2 instanceof NegativeInfinity) { // other num is not positive
-            // infinity
+        if (num1 instanceof NegativeInfinity || num2 instanceof NegativeInfinity) {
+        	// other num is not positive infinity
             return getNegativeInfinity();
         }
 
-        // May throw MathArithmeticException due to integer overflow
-        return new RationalInt(((RationalInt) num1).value.add(((RationalInt) num2).value));
+        return new RationalBigInt(((RationalBigInt) num1).value.add(((RationalBigInt) num2).value));
     }
 
     public Num sub(Num num1, Num num2) {
@@ -396,8 +398,7 @@ public class RationalInt implements Num {
             return getNegativeInfinity();
         }
 
-        // May throw MathArithmeticException due to integer overflow
-        return new RationalInt(((RationalInt) num1).value.subtract(((RationalInt) num2).value));
+        return new RationalBigInt(((RationalBigInt) num1).value.subtract(((RationalBigInt) num2).value));
     }
 
     public Num mult(Num num1, Num num2) {
@@ -433,16 +434,14 @@ public class RationalInt implements Num {
             }
         }
 
-        // May throw MathArithmeticException due to integer overflow
-        return new RationalInt(((RationalInt) num1).value.multiply(((RationalInt) num2).value));
+        return new RationalBigInt((((RationalBigInt) num1).value.multiply(((RationalBigInt) num2).value)));
     }
 
     public Num div(Num num1, Num num2) {
         if (num1 instanceof NaN || num2 instanceof NaN
                 || ((num1 instanceof PositiveInfinity || num1 instanceof NegativeInfinity)
-                && (num2 instanceof PositiveInfinity || num2 instanceof NegativeInfinity))) { // two infinities
-            // in the
-            // division
+                		// two infinities in the division
+                && (num2 instanceof PositiveInfinity || num2 instanceof NegativeInfinity))) { 
             return getNaN();
         }
         if (num1 instanceof PositiveInfinity) { // positive infinity divided by some finite value
@@ -460,13 +459,13 @@ public class RationalInt implements Num {
             }
         }
         if (num2 instanceof PositiveInfinity || num2 instanceof NegativeInfinity) { // finite value divided by infinity
-            return new RationalInt(0);
+            return new RationalBigInt(0);
         }
 
-        if (((RationalInt) num2).eqZero()) {
+        if (((RationalBigInt) num2).eqZero()) {
             return getPositiveInfinity();
         } else {
-            return new RationalInt(((RationalInt) num1).value.divide(((RationalInt) num2).value));
+            return new RationalBigInt(((RationalBigInt) num1).value.divide(((RationalBigInt) num2).value));
         }
     }
 
@@ -478,7 +477,7 @@ public class RationalInt implements Num {
             return getPositiveInfinity();
         }
 
-        return new RationalInt(((RationalInt) num).value.abs());
+        return new RationalBigInt(((RationalBigInt) num).value.abs());
     }
 
     public Num diff(Num num1, Num num2) {
@@ -490,7 +489,7 @@ public class RationalInt implements Num {
             return getPositiveInfinity();
         }
 
-        return sub(max(((RationalInt) num1), ((RationalInt) num2)), min(((RationalInt) num1), ((RationalInt) num2)));
+        return sub(max(((RationalBigInt) num1), ((RationalBigInt) num2)), min(((RationalBigInt) num1), ((RationalBigInt) num2)));
     }
 
     public Num max(Num num1, Num num2) {
@@ -507,7 +506,7 @@ public class RationalInt implements Num {
             return num1.copy();
         }
 
-        if (((RationalInt) num1).value.compareTo(((RationalInt) num2).value) >= 0) {
+        if (((RationalBigInt) num1).value.compareTo(((RationalBigInt) num2).value) >= 0) {
             return num1;
         } else {
             return num2;
@@ -528,7 +527,7 @@ public class RationalInt implements Num {
             return num1.copy();
         }
 
-        if (((RationalInt) num1).value.compareTo(((RationalInt) num2).value) <= 0) {
+        if (((RationalBigInt) num1).value.compareTo(((RationalBigInt) num2).value) <= 0) {
             return num1;
         } else {
             return num2;
@@ -546,6 +545,6 @@ public class RationalInt implements Num {
             return getPositiveInfinity();
         }
 
-        return new RationalInt(((RationalInt) num).value.negate());
+        return new RationalBigInt(((RationalBigInt) num).value.negate());
     }
 }
