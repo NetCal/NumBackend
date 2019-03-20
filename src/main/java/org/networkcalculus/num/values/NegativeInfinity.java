@@ -24,9 +24,9 @@
  *
  */
 
-package org.networkcalculus.dnc.numbers.values;
+package org.networkcalculus.num.values;
 
-import org.networkcalculus.dnc.numbers.Num;
+import org.networkcalculus.num.Num;
 
 public final class NegativeInfinity implements Num {
     private static NegativeInfinity instance = new NegativeInfinity();

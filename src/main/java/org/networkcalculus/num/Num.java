@@ -24,15 +24,15 @@
  *
  */
 
-package org.networkcalculus.dnc.numbers;
+package org.networkcalculus.num;
 
-import org.networkcalculus.dnc.numbers.implementations.RationalBigInt;
-import org.networkcalculus.dnc.numbers.implementations.RationalInt;
-import org.networkcalculus.dnc.numbers.implementations.RealDoublePrecision;
-import org.networkcalculus.dnc.numbers.implementations.RealSinglePrecision;
-import org.networkcalculus.dnc.numbers.values.NaN;
-import org.networkcalculus.dnc.numbers.values.NegativeInfinity;
-import org.networkcalculus.dnc.numbers.values.PositiveInfinity;
+import org.networkcalculus.num.implementations.RationalBigInt;
+import org.networkcalculus.num.implementations.RationalInt;
+import org.networkcalculus.num.implementations.RealDoublePrecision;
+import org.networkcalculus.num.implementations.RealSinglePrecision;
+import org.networkcalculus.num.values.NaN;
+import org.networkcalculus.num.values.NegativeInfinity;
+import org.networkcalculus.num.values.PositiveInfinity;
 
 public interface Num {
     final Num NaN = new NaN(Double.NaN);

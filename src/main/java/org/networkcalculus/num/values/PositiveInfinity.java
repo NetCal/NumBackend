@@ -24,62 +24,54 @@
  *
  */
 
-package org.networkcalculus.dnc.numbers.values;
+package org.networkcalculus.num.values;
 
-import org.networkcalculus.dnc.numbers.Num;
+import org.networkcalculus.num.Num;
 
-public final class NaN implements Num {
-    private static NaN instance = new NaN();
-    
+public final class PositiveInfinity implements Num {
+    private static PositiveInfinity instance = new PositiveInfinity();
+
     // --------------------------------------------------------------------------------------------------------------
     // Constructors
     // --------------------------------------------------------------------------------------------------------------
+
+    private PositiveInfinity() {
+    }
     
-	private NaN() {
+ 	public PositiveInfinity(int num) {
+    }
+ 	
+    public PositiveInfinity(double value) {
+    }
+    
+    public PositiveInfinity(int num, int den) {
+    }
+    
+    public PositiveInfinity(PositiveInfinity num) {
     }
 
-    public NaN(int num) {
-    }
-    
-    public NaN(double value) {
-    }
-    
-    public NaN(int num, int den){
-    }
-    
-    public NaN(NaN num) {
-    }
-
-    /* 
-     * NaN should not be used as a factory.
-     * Therefore, there is no instance or get Instance method.
-     */
-    public static NaN getInstance() {
+    public static PositiveInfinity getInstance() {
     	return instance;
     }
-	
+
     // --------------------------------------------------------------------------------------------------------------
     // Conversions
     // --------------------------------------------------------------------------------------------------------------
-    
-    public double doubleValue() {
-        return Double.NaN;
-    }
 
-    /* 
-     * NaN does not have an value member variable.
-     */
+    public double doubleValue() {
+        return Double.POSITIVE_INFINITY;
+    }
 
     @Override
     public int hashCode() {
-        return Double.hashCode(Double.NaN);
+        return Double.hashCode(Double.POSITIVE_INFINITY);
     }
 
     @Override
     public String toString() {
-        return Double.toString(Double.NaN);
+        return Double.toString(Double.POSITIVE_INFINITY);
     }
-	
+
     // --------------------------------------------------------------------------------------------------------------
     // Factory
     // --------------------------------------------------------------------------------------------------------------
@@ -89,11 +81,11 @@ public final class NaN implements Num {
     }
 
     public Num getPositiveInfinity() {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num createPositiveInfinity() {
-        throw new RuntimeException();
+        return instance;
     }
 
     public Num getNegativeInfinity() {
@@ -105,11 +97,11 @@ public final class NaN implements Num {
     }
 
     public Num getNaN() {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num createNaN() {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num getZero() {
@@ -125,7 +117,11 @@ public final class NaN implements Num {
     }
 
     public Num create(double value) {
-        throw new RuntimeException();
+        if (value == Double.POSITIVE_INFINITY) {
+            return instance;
+        } else {
+            throw new RuntimeException();
+        }
     }
 
     public Num create(int num, int den) {
@@ -133,7 +129,11 @@ public final class NaN implements Num {
     }
 
     public Num create(String num_str) throws Exception {
-        throw new RuntimeException();
+        if (num_str.equals("Infinity")) {
+            return instance;
+        } else {
+            throw new RuntimeException();
+        }
     }
     
     // --------------------------------------------------------------------------------------------------------------
@@ -141,54 +141,70 @@ public final class NaN implements Num {
     // --------------------------------------------------------------------------------------------------------------
 
     // Compare to zero: >, >=, =, <=, <
-    public boolean ltZero() {
+    public boolean gtZero() {
+        return true;
+    }
+
+    public boolean geqZero() {
+        return true;
+    }
+
+    public boolean eqZero() {
         return false;
     }
 
     public boolean leqZero() {
         return false;
     }
-    
-    public boolean eqZero() {
-        return false;
-    }
 
-    public boolean geqZero() {
-        return false;
-    }
-
-    public boolean gtZero() {
+    public boolean ltZero() {
         return false;
     }
 
     // Compare to other number: >, >=, =, <=, <
-    public boolean lt(Num num) {
+    public boolean gt(Num num) {
+        return true;
+    }
+
+    public boolean geq(Num num) {
+        return true;
+    }
+
+    public boolean eq(Num num) {
+        if (num.gtZero() && num.isInfinite()) {
+            return true;
+        } else {
+        	return false;
+        }
+    }
+
+    public boolean eq(double num) {
+        if (num == Double.POSITIVE_INFINITY) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof PositiveInfinity) {
+            return true;
+        }
+        if (obj instanceof Num) {
+            return eq(((Num) obj));
+        }
         return false;
     }
 
     public boolean leq(Num num) {
         return false;
     }
-    
-    public boolean eq(Num num) {
-        return false;
-    }
-    
-    public boolean eq(double num) {
-        return false;
-    }
-    
-//	@SuppressFBWarnings(value = "EQ_ALWAYS_FALSE", justification = "Comparison to NaN should always return false.")
-    @Override
-    public boolean equals(Object obj) {
-        return false;
-    }
 
-    public boolean geq(Num num) {
-        return false;
-    }
-    
-    public boolean gt(Num num) {
+    public boolean lt(Num num) {
         return false;
     }
 
@@ -198,50 +214,50 @@ public final class NaN implements Num {
     }
 
     public boolean isInfinite() {
-        return false;
-    }
-
-    public boolean isNaN() {
         return true;
     }
 
+    public boolean isNaN() {
+        return false;
+    }
+    
     // --------------------------------------------------------------------------------------------------------------
     // Operations (Utils)
     // --------------------------------------------------------------------------------------------------------------
 
     public Num add(Num num1, Num num2) {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num sub(Num num1, Num num2) {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num mult(Num num1, Num num2) {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num div(Num num1, Num num2) {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num abs(Num num) {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num diff(Num num1, Num num2) {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num max(Num num1, Num num2) {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num min(Num num1, Num num2) {
-        return instance;
+        throw new RuntimeException();
     }
 
     public Num negate(Num num) {
-        return instance;
+        throw new RuntimeException();
     }
 }

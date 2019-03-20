@@ -6,9 +6,9 @@
 
     <name>NetworkCalculus.org DNC NumBackend</name>
     <description>A backend for (immutable) number representations that allows you to switch between different real and rational implementations.</description>
-    <url>networkcalculus.org</url>
+    <url>num.networkcalculus.org</url>
 
-    <groupId>org.networkcalculus.numbers</groupId>
+    <groupId>org.networkcalculus.num</groupId>
     <artifactId>NetCal-NumBackend</artifactId>
     <version>1.0.0</version>
 	

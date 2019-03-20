@@ -24,9 +24,9 @@
  *
  */
 
-package org.networkcalculus.dnc.numbers.implementations;
+package org.networkcalculus.num.implementations;
 
-import org.networkcalculus.dnc.numbers.Num;
+import org.networkcalculus.num.Num;
 
 public class RealDoublePrecision implements Num {
     private static RealDoublePrecision instance = new RealDoublePrecision();

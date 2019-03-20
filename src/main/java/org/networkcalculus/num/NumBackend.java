@@ -23,7 +23,7 @@
  *
  */
 
-package org.networkcalculus.dnc.numbers;
+package org.networkcalculus.num;
 
 public enum NumBackend { 
 	REAL_DOUBLE_PRECISION,

@@ -24,13 +24,13 @@
  *
  */
 
-package org.networkcalculus.dnc.numbers.implementations;
+package org.networkcalculus.num.implementations;
 
 import org.apache.commons.math3.fraction.Fraction;
-import org.networkcalculus.dnc.numbers.Num;
-import org.networkcalculus.dnc.numbers.values.NaN;
-import org.networkcalculus.dnc.numbers.values.NegativeInfinity;
-import org.networkcalculus.dnc.numbers.values.PositiveInfinity;
+import org.networkcalculus.num.Num;
+import org.networkcalculus.num.values.NaN;
+import org.networkcalculus.num.values.NegativeInfinity;
+import org.networkcalculus.num.values.PositiveInfinity;
 
 /**
  * Wrapper class around org.apache.commons.math3.fraction.Fraction introducing
@@ -142,7 +142,7 @@ public class RationalInt implements Num {
     }
 
     public Num createNaN() {
-        return org.networkcalculus.dnc.numbers.values.NaN.getInstance();
+        return org.networkcalculus.num.values.NaN.getInstance();
     }
 
     public Num getZero() {
