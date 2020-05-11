@@ -22,9 +22,9 @@
     <developers>
 		<developer>
 			<name>Steffen Bondorf</name>
-			<email>steffen.bondorf@ntnu.no</email>
-			<organization>NTNU - Norwegian University of Science and Technology, Trondheim, Norway</organization>
-			<organizationUrl>https://www.ntnu.edu/iik</organizationUrl>
+			<email>steffen.bondorf@rub.de</email>
+			<organization>Distributed and Networked Systems, Ruhr University Bochum, Germany</organization>
+			<organizationUrl>dnet.rub.de</organizationUrl>
 		</developer>
     </developers>
 
